@@ -1,6 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tasman Trade Desk</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +51,8 @@ a { color: var(--accent); }
 
 header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
 .top-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 12px 0; }
-.brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 4px 10px; flex-wrap: wrap; }
+.brand .logo { width: 30px; height: 30px; flex: none; }
 .brand h1 { margin: 0; font: 800 22px/1.1 var(--font-display); font-stretch: 85%; letter-spacing: -0.01em; }
 .brand .lane { font: 500 12px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; }
 nav.tabs { display: flex; gap: 2px; margin-top: 8px; overflow-x: auto; }
@@ -213,6 +216,18 @@ thead th { font: 600 11px var(--font-body); text-transform: uppercase; letter-sp
 .res.pass { background: var(--accent-soft); } .res.pass .num { color: var(--accent); }
 .res.fail { background: var(--duty-soft); } .res.fail .num { color: var(--duty); }
 .res p { margin: 0; font-size: 13px; }
+/* News */
+.news-col { padding: 0; }
+.news-col h3 { margin: 0; padding: 14px 16px 4px; font: 700 19px var(--font-display); font-stretch: 90%; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.news-col h3 .src { font: 500 12px var(--font-mono); color: var(--muted); }
+.news-notice { margin: 0; padding: 0 16px 12px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.news-list { list-style: none; margin: 0; padding: 0; }
+.news-list li { padding: 12px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 3px; }
+.news-list li:last-child { border-bottom: 0; }
+.news-list .meta { font: 500 12px var(--font-mono); color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; }
+.news-list a.t { font-weight: 600; color: var(--ink); text-decoration: none; }
+.news-list a.t:hover { color: var(--accent); text-decoration: underline; }
+.news-list p { margin: 0; font-size: 14px; color: var(--muted); }
 footer { color: var(--muted); font-size: 12px; padding-block: 16px 32px; border-top: 1px solid var(--line); }
 footer p { margin: 4px 0; max-width: 100ch; }
 .loading { padding: 40px 16px; text-align: center; color: var(--muted); }
@@ -223,6 +238,12 @@ footer p { margin: 4px 0; max-width: 100ch; }
   <div class="wrap">
     <div class="top-row">
       <div class="brand">
+        <svg class="logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <rect x="52" y="40" width="16" height="70" rx="5" fill="var(--ink)"/>
+          <path d="M14 34 q11.5 -11 23 0 t23 0 t23 0 t23 0" fill="none" stroke="var(--accent)" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="14" cy="34" r="9" fill="var(--duty)"/>
+          <circle cx="106" cy="34" r="9" fill="var(--duty)"/>
+        </svg>
         <h1>Tasman Trade Desk</h1>
         <span class="lane">AU · NZ · TARIFFS · FTAs · INCOTERMS® 2020</span>
       </div>
@@ -233,6 +254,7 @@ footer p { margin: 4px 0; max-width: 100ch; }
       <a href="#origin" data-view="origin">Origin</a>
       <a href="#fta" data-view="fta">FTA finder</a>
       <a href="#incoterms" data-view="incoterms">Incoterms</a>
+      <a href="#news" data-view="news">News</a>
     </nav>
   </div>
 </header>
@@ -382,6 +404,18 @@ footer p { margin: 4px 0; max-width: 100ch; }
     <div class="panel shared" id="fta-shared"></div>
   </section>
 
+  <!-- NEWS -->
+  <section id="view-news" hidden>
+    <div class="view-head">
+      <div>
+        <h2>News &amp; updates</h2>
+        <p>Recent trade news for New Zealand and Australia, collected daily. Every item links to the original on the publisher’s site.</p>
+      </div>
+      <div class="stamp" id="news-stamp">Loading news…</div>
+    </div>
+    <div class="grid2" id="news-cols"><div class="panel loading">Loading news…</div></div>
+  </section>
+
   <!-- INCOTERMS -->
   <section id="view-incoterms" hidden>
     <div class="view-head">
@@ -425,7 +459,7 @@ footer p { margin: 4px 0; max-width: 100ch; }
 </main>
 
 <footer class="wrap">
-  <p>Tariff data: NZ Customs Service CusMod tariff files (nightly) and the Australian Border Force Working Tariff, Schedule 3. Australian export codes: ABS AHECC 2022. NZ export codes are the NZ tariff items and statistical keys, which NZ Customs uses for both imports and exports. Australian preferential FTA rates sit in other Schedules of the Customs Tariff Act and are not loaded yet; check them on the <a href="https://ftaportal.dfat.gov.au" target="_blank" rel="noopener">DFAT FTA Portal</a>.</p>
+  <p>Tariff data: NZ Customs Service CusMod tariff files (nightly) and the Australian Border Force Working Tariff, Schedule 3. Australian export codes: ABS AHECC 2022. NZ export codes are the NZ tariff items and statistical keys, which NZ Customs uses for both imports and exports. Australian FTA rates: ABF Working Tariff, Schedules 4A–16 of the Customs Tariff Act. The <a href="https://ftaportal.dfat.gov.au" target="_blank" rel="noopener">DFAT FTA Portal</a> also has them, with partner-country rates for exporters.</p>
   <p>Incoterms® is a registered trademark of the International Chamber of Commerce. The summaries here are this tool's own and are not the ICC rules; use the official ICC publication for contracts. Everything here is general guidance, not a binding classification or a customs ruling.</p>
 </footer>
 

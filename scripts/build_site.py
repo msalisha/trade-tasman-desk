@@ -36,6 +36,9 @@ def main():
     for f in sorted(os.listdir(os.path.join(ROOT, "data"))):
         if f.endswith(".json"):
             shutil.copy(os.path.join(ROOT, "data", f), os.path.join(OUT, "data", f))
+    assets = os.path.join(ROOT, "assets")
+    if os.path.isdir(assets):
+        shutil.copytree(assets, os.path.join(OUT, "assets"))
     open(os.path.join(OUT, ".nojekyll"), "w").close()
     size = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
     print(f"Site built in {OUT} ({size // 1024} KB)")

@@ -12,6 +12,15 @@ The site is hosted on GitHub Pages and deployed by `.github/workflows/refresh-an
 - **Any push to `main`** (for example, after editing `data/origin.json`) redeploys without refreshing data.
 - To refresh now, go to **Actions → Refresh data and deploy → Run workflow**.
 
+### Daily news (`.github/workflows/news.yml`)
+
+Every day at 19:00 UTC (8am NZ) `scripts/fetch_news.py` collects:
+
+- **MFAT Weekly Global Economic Reports** (NZ): title, date and MFAT's one-line description, with a link. Crown copyright, CC BY 4.0, credited on the page.
+- **IFCBAA Latest News** (AU): headline, date, reference and a link only. © IFCBAA, all rights reserved, so no article text is copied, and items behind a member login are skipped.
+
+To switch a source off, set it to `false` in `news-sources.json` and push; the next news run removes its items. The site only redeploys when there are new items. If a source can't be read, the previous items stay and one issue is opened.
+
 One-time setup on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 `index.html` is written without `<html>`, `<head>` and `<body>` tags so it can also be published as a Claude artifact; `scripts/build_site.py` wraps it into a full page in `_site/` for normal hosting.
@@ -55,7 +64,8 @@ https://www.customs.govt.nz/business/tariffs/tariff-classifications-and-rates.
 ## Data and limits
 
 - `data/nz_tariff.json`: every current NZ tariff line, with its normal rate and each preferential rate that differs from it (AU, CN, CPT, RCEP, UK, EU, UAE, IN and more).
-- `data/au_tariff.json`: every Schedule 3 line with its general rate and the Schedule 3 preference codes (NZ, PG, FI, DC, CA and others). Australian FTA preferential rates are in other Schedules of the Customs Tariff Act and are **not loaded yet**. The app links to the DFAT FTA Portal for them.
+- `data/au_tariff.json`: every Schedule 3 line with its general rate and the Schedule 3 preference codes (NZ, PG, FI, DC, CA and others). Statistical codes listed on their own rows under an 8-digit line become separate lines.
+- `data/au_fta.json`: Australian FTA rates from Schedules 4A–16 (`scripts/build_au_fta.py`, refreshed weekly). Originating goods are Free unless the agreement's schedule lists the line; phased rates are resolved to today's rate. New Zealand goods use the "NZ" rate in Schedule 3, otherwise Free (Customs Tariff Act s 16(1)(b)).
 - `data/ftas.json`: agreements in force for AU (19) and NZ (17, plus non-reciprocal schemes), hand-maintained from DFAT and MFAT. Checked 17 Nov 2026.
 - `data/au_export.json`: the 6,130 AHECC export codes, with ABS footnotes.
 - `data/export_rules.json`: export declaration thresholds, proof-of-origin method per agreement, permit and sanctions flags. Hand-maintained. All 36 proof-of-origin entries were checked on 17 Nov 2026; each carries `src` and `url` for the page it was checked against (mostly DFAT, ABF, NZ Customs and MFAT). Set `checked: false` on any entry you can't re-confirm, and the app labels it "Check before relying on it".

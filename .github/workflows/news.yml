@@ -1,0 +1,91 @@
+name: Daily news
+
+on:
+  schedule:
+    # Every day 19:00 UTC = 8am NZ / 6am Sydney (daylight time).
+    - cron: "0 19 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+# Shared with the weekly tariff workflow so two deploys never overlap.
+concurrency:
+  group: refresh-and-deploy
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Collect news
+        id: collect
+        continue-on-error: true
+        run: python3 scripts/fetch_news.py
+
+      - name: Commit news
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/news.json
+          # Ignore a change that is only the "updated" timestamp.
+          if git diff --cached -U0 data/news.json | grep -E '^[+-] ' | grep -vq '"updated"'; then
+            git commit -m "Daily news $(date -u +%Y-%m-%d)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            git reset -q data/news.json && git checkout -- data/news.json
+            echo "No new news items."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open an issue if a news source failed
+        if: steps.collect.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # One open issue at a time, so a source that stays down doesn't create one per day.
+          if [ -z "$(gh issue list --state open --search 'News source failed in:title' --json number -q '.[0].number')" ]; then
+            gh issue create --title "News source failed ($(date -u +%Y-%m-%d))" --body \
+              "A news source couldn't be read; the site kept the previous items. Run log: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          fi
+
+  deploy:
+    needs: news
+    if: needs.news.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build site
+        run: python3 scripts/build_site.py _site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

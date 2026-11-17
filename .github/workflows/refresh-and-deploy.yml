@@ -48,6 +48,13 @@ jobs:
           python3 scripts/build_au.py "$RUNNER_TEMP/au"
           python3 scripts/validate_data.py au || { git checkout -- data/au_tariff.json; exit 1; }
 
+      - name: Refresh Australian FTA rates
+        id: aufta
+        continue-on-error: true
+        run: |
+          python3 scripts/build_au_fta.py "$RUNNER_TEMP/aufta"
+          python3 scripts/validate_data.py au_fta || { git checkout -- data/au_fta.json; exit 1; }
+
       - name: Check agreement lists
         id: watch
         continue-on-error: true
@@ -74,14 +81,15 @@ jobs:
             --body-file "$RUNNER_TEMP/agreement-changes.md"
 
       - name: Open an issue if a refresh failed
-        if: steps.nz.outcome == 'failure' || steps.au.outcome == 'failure'
+        if: steps.nz.outcome == 'failure' || steps.au.outcome == 'failure' || steps.aufta.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
           NZ: ${{ steps.nz.outcome }}
           AU: ${{ steps.au.outcome }}
+          AUFTA: ${{ steps.aufta.outcome }}
         run: |
           gh issue create --title "Tariff refresh failed ($(date -u +%Y-%m-%d))" --body \
-            "NZ tariff: $NZ. Australian tariff: $AU. The site kept the previous data for any failed source. See the run log: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            "NZ tariff: $NZ. Australian tariff: $AU. Australian FTA rates: $AUFTA. The site kept the previous data for any failed source. See the run log: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
   deploy:
     needs: refresh

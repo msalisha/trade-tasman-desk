@@ -12,6 +12,8 @@ CHECKS = {
     # name: (file, minimum line count, extra check)
     "nz": ("nz_tariff.json", 15000, lambda d: sum(1 for i in d["items"] if i.get("normal")) > 15000),
     "au": ("au_tariff.json", 8000, lambda d: sum(1 for i in d["items"] if i.get("stat")) > 5000),
+    # FTA schedules: all 18 agreements present, and at least ~100 listed lines in each.
+    "au_fta": ("au_fta.json", 18, lambda d: all(len(a["lines"]) >= 100 for a in d["agreements"].values())),
 }
 
 
@@ -21,7 +23,7 @@ def main(which):
         data = json.load(open(os.path.join(ROOT, name)))
     except Exception as e:  # unreadable or missing
         sys.exit(f"{name}: could not read ({e})")
-    n = len(data.get("items", []))
+    n = len(data.get("items", data.get("agreements", [])))
     if n < minimum:
         sys.exit(f"{name}: only {n} lines (expected at least {minimum})")
     if not extra(data):

@@ -108,7 +108,7 @@ const state = {
 };
 
 /* ---------- routing ---------- */
-const VIEWS = ["tariff", "export", "origin", "fta", "incoterms"];
+const VIEWS = ["tariff", "export", "origin", "fta", "incoterms", "news"];
 function route() {
   const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "tariff";
   VIEWS.forEach((name) => ($("#view-" + name).hidden = name !== v));
@@ -276,8 +276,11 @@ function wordMatchers(q) {
 function rateRank(r) {
   if (!r) return 9999;
   if (/^free/i.test(r)) return 0;
-  const m = r.match(/^([\d.]+)%$/);
-  return m ? parseFloat(m[1]) : 500;
+  const m = r.match(/^([\d.]+)%/);
+  if (m) return parseFloat(m[1]);
+  // Specific rates ("$0.41/kg"): rank after percentages, cheaper first.
+  const s = r.match(/^\$\s?([\d.,]+)/);
+  return s ? 500 + parseFloat(s[1].replace(/,/g, "")) : 9000;
 }
 function rateHtml(r) {
   if (!r) return `<span class="rate">—</span>`;
@@ -303,14 +306,41 @@ function originCell(l) {
   // AU
   const ags = D.cover(D.fta.AU, o);
   if (/^free$/i.test(l.rate)) return `<div class="pref-list"><div class="row best"><span class="nm">All origins</span>${rateHtml("Free")}</div></div>`;
-  const sched = AU_SCHED_CODES[o] || (FORUM_ISLANDS.includes(o) ? "FI" : null);
-  let schedRate = null;
-  if (sched) for (const [k, v] of Object.entries(l.other || {})) if (k.split("/").includes(sched)) schedRate = v;
-  const lines = [];
-  if (schedRate) lines.push(`<div class="row best"><span class="nm">Schedule 3 (${esc(sched)})</span>${rateHtml(schedRate)}</div>`);
-  if (ags.length) lines.push(`<div class="row"><span class="nm">${esc(ags.map((a) => a.id).join(", "))}</span><a href="https://ftaportal.dfat.gov.au" target="_blank" rel="noopener">FTA rate ↗</a></div>`);
-  if (!lines.length) lines.push(`<div class="row"><span class="nm">No FTA</span>${rateHtml(l.rate)}</div>`);
-  return `<div class="pref-list">${lines.join("")}</div>`;
+  const schedule3 = (code) => {
+    for (const [k, v] of Object.entries(l.other || {})) if (k.split("/").includes(code)) return v;
+    return null;
+  };
+  const rows = [];
+  for (const a of ags) {
+    // ANZCERTA: the "NZ" rate in Schedule 3, otherwise Free (Customs Tariff Act s 16(1)(b)).
+    if (a.id === "ANZCERTA") { rows.push({ nm: a.id, r: schedule3("NZ") || "Free" }); continue; }
+    const s = D.auFta && D.auFta.agreements[a.id];
+    rows.push({ nm: a.id, r: s ? auFtaRate(s.lines, l.digits, D.fta.countries[o]) : null });
+  }
+  // Non-FTA preferences printed in Schedule 3 (Papua New Guinea, Forum Islands, Canada, Malaysia, Singapore).
+  const sched = o === "NZ" ? null : AU_SCHED_CODES[o] || (FORUM_ISLANDS.includes(o) ? "FI" : null);
+  const s3 = sched && schedule3(sched);
+  if (s3) rows.push({ nm: `Schedule 3 (${sched})`, r: s3 });
+  if (!rows.length) return `<div class="pref-list"><div class="row"><span class="nm">No FTA</span>${rateHtml(l.rate)}</div></div>`;
+  const known = rows.filter((x) => x.r).sort((x, y) => rateRank(x.r) - rateRank(y.r));
+  const unknown = rows.filter((x) => !x.r);
+  const best = known.length ? rateRank(known[0].r) : null;
+  return `<div class="pref-list">${known.slice(0, 4).map((x) =>
+      `<div class="row ${rateRank(x.r) === best ? "best" : ""}"><span class="nm">${esc(x.nm)}</span>${rateHtml(x.r)}</div>`).join("")}
+    ${known.length > 4 ? `<span class="nm">+${known.length - 4} more</span>` : ""}
+    ${unknown.map((x) => `<div class="row"><span class="nm">${esc(x.nm)}</span><a href="https://ftaportal.dfat.gov.au" target="_blank" rel="noopener">FTA rate ↗</a></div>`).join("")}</div>`;
+}
+
+// Rate for a tariff line under one Australian FTA schedule: Free unless the line is listed.
+// Some CPTPP lines carry a rate for named countries only ("United Kingdom: $0.776/kg").
+function auFtaRate(lines, digits, countryName) {
+  const hit = lines[digits] ?? lines[digits.slice(0, 6) + "00"] ?? lines[digits.slice(0, 4) + "0000"];
+  if (!hit) return "Free";
+  const parts = hit.split("; ");
+  if (!parts.every((p) => /^[A-Z][A-Za-z ]+: /.test(p))) return hit;
+  const norm = (s) => s.toLowerCase().replace("vietnam", "viet nam").replace(/ darussalam$/, "");
+  const mine = parts.find((p) => norm(p.split(":")[0]) === norm(countryName || ""));
+  return mine ? mine.slice(mine.indexOf(":") + 2) : "Free";
 }
 
 function renderTariff() {
@@ -346,10 +376,11 @@ function renderTariff() {
 
 function tariffFoot() {
   const D = state.data;
-  $("#tariff-stamp").innerHTML = `NZ tariff: ${esc(D.nz.extracted.replace(/\s+\d+:\d+:\d+.*?NZDT/, ""))}<br>AU Schedule 3: extracted ${fmtDate(D.au.extracted)}`;
+  $("#tariff-stamp").innerHTML = `NZ tariff: ${esc(D.nz.extracted.replace(/\s+\d+:\d+:\d+.*?NZDT/, ""))}<br>AU tariff and FTA schedules: extracted ${fmtDate(D.au.extracted)}`;
   $("#tariff-foot").textContent =
     "NZ codes show tariff item · statistical key with check letter. AU codes show tariff classification · statistical code. " +
-    "NZ rates by origin come straight from NZ Customs preferential columns. Australian FTA rates are kept in other Schedules of the Customs Tariff Act, so for Australia this shows the Schedule 3 rate and which FTAs apply.";
+    "NZ rates by origin come from NZ Customs’ preferential columns. Australian FTA rates come from Schedules 4A–16 of the Customs Tariff Act: originating goods are Free unless the agreement’s schedule lists the line. " +
+    "Preferential rates apply only to goods that meet the agreement’s rules of origin.";
 }
 
 /* ---------- FTA view ---------- */
@@ -488,6 +519,47 @@ async function bootOrigin() {
     wireOrigin();
   } catch (err) {
     $("#ori-criteria").innerHTML = `<div class="panel empty">The origin data didn’t load (${esc(err.message)}). Reload the page to try again.</div>`;
+  }
+}
+
+/* ---------- News view ---------- */
+const NEWS_SOURCES = {
+  mfat: {
+    title: "New Zealand", src: "MFAT",
+    notice: `Source: New Zealand Ministry of Foreign Affairs and Trade (MFAT), <a href="https://www.mfat.govt.nz/en/trade/mfat-market-reports" target="_blank" rel="noopener">Market reports ↗</a>. Crown copyright, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 ↗</a>. Summaries are MFAT’s own one-line descriptions; read the full report on mfat.govt.nz.`,
+  },
+  ifcbaa: {
+    title: "Australia", src: "IFCBAA",
+    notice: `Headlines link to news published by the International Forwarders &amp; Customs Brokers Association of Australia (IFCBAA). © IFCBAA, all rights reserved. Read the full articles on <a href="https://www.ifcbaa.com/IFCBAA/News/IFCBAA/News/LatestNews.aspx" target="_blank" rel="noopener">ifcbaa.com ↗</a>.`,
+  },
+};
+
+async function bootNews() {
+  try {
+    const r = await fetch("data/news.json");
+    if (!r.ok) throw new Error("data/news.json " + r.status);
+    const news = await r.json();
+    const upd = new Date(news.updated);
+    $("#news-stamp").textContent = `Collected ${upd.toLocaleString("en-AU", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" })}`;
+    $("#news-cols").innerHTML = Object.entries(NEWS_SOURCES).map(([key, s]) => {
+      const data = news.sources[key] || { enabled: false, items: [] };
+      const body = !data.enabled
+        ? `<li><p>This source is switched off.</p></li>`
+        : !data.items.length
+          ? `<li><p>No recent items yet.</p></li>`
+          : data.items.map((i) => `<li>
+              <span class="meta"><span>${fmtDate(i.date)}</span>${i.ref ? `<span>${esc(i.ref)}</span>` : ""}</span>
+              <a class="t" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.title)} ↗</a>
+              ${i.summary ? `<p>${esc(i.summary)}</p>` : ""}
+            </li>`).join("");
+      return `<div class="panel news-col">
+        <h3>${esc(s.title)} <span class="src">${esc(s.src)}</span></h3>
+        <p class="news-notice">${s.notice}</p>
+        <ul class="news-list">${body}</ul></div>`;
+    }).join("");
+  } catch (err) {
+    $("#news-stamp").textContent = "News unavailable";
+    $("#news-cols").innerHTML = `<div class="panel empty">The news didn’t load (${esc(err.message)}). Reload the page to try again.</div>`;
   }
 }
 
@@ -662,10 +734,13 @@ async function boot() {
   wire();
   pickerOptions();
   bootOrigin();
+  bootNews();
   try {
     const [au, nz, fta, auEx, rules] = await Promise.all(["data/au_tariff.json", "data/nz_tariff.json", "data/ftas.json", "data/au_export.json", "data/export_rules.json"]
       .map((u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); })));
     state.data = prepare(au, nz, fta);
+    // Australian FTA schedules: optional, so the tariff still works if this file is missing.
+    state.data.auFta = await fetch("data/au_fta.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
     state.data.auExport = auEx.items.map((it) => ({
       mkt: "AU", digits: it.code, code: `${it.code.slice(0, 4)}.${it.code.slice(4, 6)}.${it.code.slice(6, 8)}`, stat: "",
       unit: it.unit, desc: cap(it.desc), path: it.path ? it.path.split(" › ").map(cap).join(" › ") : "", notes: it.notes || [],

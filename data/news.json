@@ -1,0 +1,106 @@
+{
+ "updated": "2026-11-17T22:11Z",
+ "sources": {
+  "mfat": {
+   "enabled": true,
+   "items": [
+    {
+     "title": "Weekly Global Economic Report - 17 November 2026",
+     "date": "2026-11-17",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-17-november-2026",
+     "summary": "The United States International Trade Commission section 201 safeguard investigation into lamb imports will proceed to the remedy phase."
+    },
+    {
+     "title": "Weekly Global Economic Report - 9 November 2026",
+     "date": "2026-11-09",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-9-november-2026",
+     "summary": "Fiji's Ministry of Agriculture, Waterways and Sugar Industry and Pacific Trade and Invest New Zealand have signed a three-year Memorandum of Understanding to support the development of Fiji's pineapple sector."
+    },
+    {
+     "title": "Weekly Global Economic Report – 3 November 2026",
+     "date": "2026-11-03",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-3-november-2026",
+     "summary": "On October 28 the US President issued the outcome of the Section 232 National Security investigation into Robotics, industrial machinery and their parts."
+    },
+    {
+     "title": "Weekly Global Economic Report - 27 October 2026",
+     "date": "2026-10-27",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-27-october-2026",
+     "summary": "The New Zealand–India Free Trade Agreement (FTA) entered into force on Tuesday 20 October."
+    },
+    {
+     "title": "Weekly Global Economic Report - 19 October 2026",
+     "date": "2026-10-19",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-19-october-2026",
+     "summary": "The International Monetary Fund's latest World Economic Outlook finds the global economy has remained more resilient than expected in 2026."
+    },
+    {
+     "title": "Weekly Global Economic Report - 13 October 2026",
+     "date": "2026-10-13",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-13-october-2026",
+     "summary": "Fiji joins the Future of Investment and Trade (FIT) Partnership as its 20th member."
+    },
+    {
+     "title": "Weekly Global Economic Report – 7 October 2026",
+     "date": "2026-10-07",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-7-october-2026",
+     "summary": "According to the OECD’s September Interim Economic Outlook, Global growth moderated in the first half of 2026."
+    },
+    {
+     "title": "Weekly Global Economic Report - 29 September 2026",
+     "date": "2026-09-29",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-29-september-2026",
+     "summary": "On Monday 21 September, New Zealand and India ratified our free trade agreement, clearing the way for entry into force next month on 20 October."
+    },
+    {
+     "title": "Weekly Global Economic Report – 22 September 2026",
+     "date": "2026-09-22",
+     "url": "https://www.mfat.govt.nz/en/trade/mfat-market-reports/weekly-global-economic-report-22-september-2026",
+     "summary": "Costa Rica has officially become the fifth member of the Digital Economy Partnership Agreement (DEPA)."
+    }
+   ]
+  },
+  "ifcbaa": {
+   "enabled": true,
+   "items": [
+    {
+     "title": "Import Industry Advice And Notices 12 November 2026",
+     "date": "2026-11-12",
+     "ref": "WIN 2026/45",
+     "url": "https://www.ifcbaa.com/CBFCA/News/WIN-2026/Import%20Industry%20Advice%20And%20Notices%2012%20November%202026.aspx"
+    },
+    {
+     "title": "Import Industry Advice And Notices 05 November 2026",
+     "date": "2026-11-05",
+     "ref": "WIN 2026/44",
+     "url": "https://www.ifcbaa.com/CBFCA/News/WIN-2026/Import%20Industry%20Advice%20And%20Notices%2005%20November%202026.aspx"
+    },
+    {
+     "title": "Import Industry Advice And Notices 29 October 2026",
+     "date": "2026-10-29",
+     "ref": "WIN 2026/43",
+     "url": "https://www.ifcbaa.com/CBFCA/News/WIN-2026/Import%20Industry%20Advice%20And%20Notices%2029%20October%202026.aspx"
+    }
+   ],
+   "membersOnly": [
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/ABF%20%E2%80%93%20Mandatory%20CPD%20Module%20for%20Licensed%20Customs%20Brokers%20%E2%80%93%202026-27.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/ATRC%20Investigation%20No.%20691%20%E2%80%93%20Important%20FAQ%20Securities%20Requirements%20and%20IFCBAA%20Webinar.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Biosecurity%20Shake-Up%20-%20Proposed%20Container%20Rules%20Open%20for%20Consultation.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Case%20691%20%E2%80%93%20Aluminium%20Doors%20and%20Windows%20Securities%20Processing.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Commencement%20of%202026%E2%80%9327%20Burnt%20Pine%20Longicorn%20BPL%20Flight%20Season.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/DAFF%20%E2%80%93%20Peak%20Demand%20Period%20for%20Import%20Document%20Assessment%20and%20Inspections.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Expansion-Improvement%20of%20Class%2014.3%20AA%20Proof%20of%20Concept%20PoC%20implementation.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/FACT%20%E2%80%93%20Revised%20Terminal%20Landside%20and%20Empty%20Park%20Charges%20from%201%20January%202027.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/IATA%20DAWB%20-%20FIATA%20Focus%20newsletter.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Importing%20Goods%20to%20Australia%20-%20Seasonal%20Biosecurity%20Risks%20and%20Practical%20Solutions.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/QANTAS%20FREIGHT%20-%20Planned%20industrial%20action%20-%20customer%20update%20Wednesday%2028%20October%202026.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Qantas%20Freight%20Revises%20International%20Terminal%20Charges.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Treatment%20provider%20suspended%20-%20Atilim%20Ilaclama%20Liman%20Hizmetleri%20Metal.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Treatment%20provider%20suspended%20-%20Kinetik%20Cevresagligi%20Amb.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Treatment%20provider%20suspended%20-%20Premier%20Eco-Care%20Pte%20Ltd.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/Treatment%20providers%20under%20review%20-%20Epcon%20Cevre%20Sagligi%20Sistemleri%20San.aspx",
+    "https://www.ifcbaa.com/CBFCA/News/NNF/2026/VICT%20Announces%202027%20Landside%20Charge%20Increases.aspx"
+   ]
+  }
+ }
+}

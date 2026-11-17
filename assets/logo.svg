@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Tasman Trade Desk">
+  <style>
+    .stem { fill: #13212b }
+    .wave { stroke: #0d6b62 }
+    .port { fill: #a8501a }
+    @media (prefers-color-scheme: dark) {
+      .stem { fill: #e2e9ec }
+      .wave { stroke: #52c2b4 }
+      .port { fill: #e79a63 }
+    }
+  </style>
+  <rect class="stem" x="52" y="40" width="16" height="70" rx="5"/>
+  <path class="wave" d="M14 34 q11.5 -11 23 0 t23 0 t23 0 t23 0" fill="none" stroke-width="11" stroke-linecap="round"/>
+  <circle class="port" cx="14" cy="34" r="9"/>
+  <circle class="port" cx="106" cy="34" r="9"/>
+</svg>

@@ -1,0 +1,5 @@
+{
+  "_comment": "Turn a news source on or off. Set ifcbaa to false to remove IFCBAA headlines from the site at the next news run.",
+  "mfat": true,
+  "ifcbaa": true
+}
