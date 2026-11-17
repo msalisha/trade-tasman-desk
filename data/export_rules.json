@@ -1,0 +1,382 @@
+{
+  "checked": "2026-11-17",
+  "declaration": {
+    "AU": {
+      "text": "Lodge an Export Declaration with the ABF through the Integrated Cargo System if the goods are worth more than A$2,000, need an export permit (at any value), or you are claiming duty drawback. Lower-value goods are reported with an exemption code.",
+      "threshold": "More than A$2,000",
+      "link": "https://www.abf.gov.au/importing-exporting-and-manufacturing/exporting/how-to-export/export-requirements",
+      "checked": true
+    },
+    "NZ": {
+      "text": "Lodge an export entry with NZ Customs if the FOB value is more than NZ$1,000, or if the goods need a permit or approval (at any value). Customs charges fees on export entries.",
+      "threshold": "More than NZ$1,000 FOB",
+      "link": "https://www.customs.govt.nz/business/export/clear-your-exports/",
+      "checked": true
+    }
+  },
+  "dutyLookup": {
+    "AU": {
+      "name": "DFAT FTA Portal",
+      "url": "https://ftaportal.dfat.gov.au"
+    },
+    "NZ": {
+      "name": "MFAT Tariff Finder",
+      "url": "https://www.tariff-finder.govt.nz"
+    }
+  },
+  "zeroDuty": {
+    "SG": "Singapore charges no import duty on almost all goods (exceptions include some alcohol, tobacco, vehicles and petroleum).",
+    "HK": "Hong Kong charges no import duty on almost all goods (exceptions include some spirits, tobacco and fuel)."
+  },
+  "proof": {
+    "AU": {
+      "ANZCERTA": {
+        "text": "The exporter declares that the goods meet the origin rules. The NZ importer can claim on a declaration, a certificate of origin or other evidence, so a certificate is optional.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/tariffs/free-trade-agreements/australianew-zealand-closer-economic-relations-trade-agreement-anzcerta/"
+      },
+      "SAFTA": {
+        "text": "Rarely needed, as Singapore charges no duty on almost all goods. If needed: a certificate of origin from an authorised body, or a declaration by the exporter.",
+        "checked": true,
+        "src": "ABF, Ai Group",
+        "url": "https://www.australianindustrygroup.com.au/services-and-advice/international-trade/Certificates-of-Origin/"
+      },
+      "TAFTA": {
+        "text": "Certificate of origin from an authorised body. The exporter must register first.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/tafta/fta-text-and-implementation/Pages/annex-4-2-certificate-of-origin-requirements"
+      },
+      "AUSFTA": {
+        "text": "No certificate of origin. The US importer makes the claim, using origin information from the exporter or producer in any form. Expect to provide it if US Customs asks.",
+        "checked": true,
+        "src": "ABF",
+        "url": "https://www.abf.gov.au/free-trade-agreements/files/aus-us-support-claim.pdf"
+      },
+      "AClFTA": {
+        "text": "Certificate of origin completed and signed by the exporter, who can rely on a producer’s declaration. Valid for one year.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/aclfta/fta-text-implementation/Pages/chapter-4-rules-of-origin"
+      },
+      "AANZFTA": {
+        "text": "Certificate of origin from an authorised body, or a declaration of origin by an approved exporter. Australia has applied the Second Protocol since 21 April 2025; Indonesia and the Philippines still use First Protocol certificates.",
+        "checked": true,
+        "src": "DFAT, Singapore Customs, Ai Group",
+        "url": "https://www.australianindustrygroup.com.au/link/0f2a2bf5ef9f4c0a9c46d752c5ab814c.aspx"
+      },
+      "MAFTA": {
+        "text": "A declaration of origin by the exporter, on the commercial invoice or a company letter. No certificate is needed for Australian exports.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/mafta/Pages/declarations-of-origin-and-certificates-of-origin-under-mafta"
+      },
+      "KAFTA": {
+        "text": "Certificate of origin completed by the exporter or producer (self-certification), or issued by an authorised body if you prefer.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/kafta/business/kafta-and-certificates-of-origin"
+      },
+      "JAEPA": {
+        "text": "An origin certification document completed by the importer, exporter or producer, or a certificate of origin from an authorised body.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/jaepa/business/jaepa-and-certificates-of-origin"
+      },
+      "ChAFTA": {
+        "text": "Certificate of origin from an authorised body, or a declaration of origin by the exporter on the Annex 3-B template. Each covers up to 20 items and is valid for one year.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/chafta/doing-business-with-china/chafta-certificates-of-origin"
+      },
+      "CPTPP": {
+        "text": "Certification of origin by the exporter, producer or importer. No set form: it can go on the invoice or letterhead, but must carry the Annex 3-B minimum data. Brunei, Malaysia and Viet Nam have different rules for claims made there.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/cptpp/outcomes-documents/cptpp-importers-and-exporters-frequently-asked-questions"
+      },
+      "A-HKFTA": {
+        "text": "Rarely needed, as Hong Kong charges no duty on almost all goods. If needed: a declaration of origin by the exporter, with no third-party certification. Not required below A$1,000.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/a-hkfta/doing-business-hong-kong/guide-using-hkfta-export-import"
+      },
+      "PAFTA": {
+        "text": "Certificate of origin completed by the exporter, producer or their representative. No set form and no third-party certification.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://dfat.gov.au/trade/agreements/in-force/pafta/doing-business-with-peru/Pages/guide-to-using-pafta-to-export-or-import"
+      },
+      "IA-CEPA": {
+        "text": "Certificate of origin from an authorised body; register with the issuer first. DFAT’s guide also covers declarations of origin, so check which your Indonesian buyer will accept.",
+        "checked": true,
+        "src": "DFAT, Business Chamber Queensland",
+        "url": "https://www.dfat.gov.au/sites/default/files/guide-to-using-ia-cepa-to-export-or-import.pdf"
+      },
+      "PACER Plus": {
+        "text": "A declaration of origin by the exporter or producer, using the agreement’s template. No certificate. Some low-value shipments are exempt.",
+        "checked": true,
+        "src": "DFAT, Oceania Customs Organisation",
+        "url": "https://www.dfat.gov.au/sites/default/files/pacer-plus-chapter-3.pdf"
+      },
+      "RCEP": {
+        "text": "Certificate of origin from an authorised body, or a declaration of origin by an approved exporter.",
+        "checked": true,
+        "src": "DFAT, NZ Customs",
+        "url": "https://www.customs.govt.nz/business/export/approved-exporter-scheme-self-declaration-of-origin"
+      },
+      "AI-ECTA": {
+        "text": "Certificate of origin from an authorised body. Declarations of origin are under review.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/trade/agreements/in-force/australia-india-ecta/australia-india-ecta-official-text/chapter-4-rules-origin"
+      },
+      "A-UKFTA": {
+        "text": "A declaration of origin by the exporter or producer (valid 12 months, and can cover repeat shipments), or the UK importer claims on its own knowledge.",
+        "checked": true,
+        "src": "ABF, UK Government",
+        "url": "https://www.abf.gov.au/free-trade-agreements/files/a-ukfta-rules-of-origin.pdf"
+      },
+      "UAE CEPA": {
+        "text": "Certificate of origin from an authorised body, or an origin declaration by an approved exporter.",
+        "checked": true,
+        "src": "DFAT",
+        "url": "https://www.dfat.gov.au/sites/default/files/uae-cepa-business-guide.pdf"
+      }
+    },
+    "NZ": {
+      "CER": {
+        "text": "The exporter declares that the goods meet the origin rules. The Australian importer can claim on a declaration, a certificate of origin or other evidence, so a certificate is optional.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/tariffs/free-trade-agreements/australianew-zealand-closer-economic-relations-trade-agreement-anzcerta/"
+      },
+      "ANZSCEP": {
+        "text": "Rarely needed, as Singapore charges no duty on almost all goods. If needed: a declaration by the exporter, producer or importer, in no set form. It can cover repeat shipments for 12 months; keep records for seven years.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/media/dsojm2ca/agreement-between-nz-singapore-on-a-closer-economic-partnership.pdf"
+      },
+      "TNZCEP": {
+        "text": "No certificate from an NZ certifying body is needed. The Thai importer must be able to back up the claim if asked, so agree with them what evidence you’ll provide.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://customs.govt.nz/business/tariffs/free-trade-agreements/new-zealandthailand-closer-economic-partnership-agreement"
+      },
+      "P4": {
+        "text": "A declaration of origin or a certificate of origin from the exporter or producer. Either is valid for two years.",
+        "checked": true,
+        "src": "NZ Customs, MFAT",
+        "url": "https://www.customs.govt.nz/information-releases-and-legislation/legislation/international-agreements/free-trade-agreements/trans-pacific-strategic-economic-partnership"
+      },
+      "NZCFTA": {
+        "text": "Certificate of origin from an authorised body, or an approved exporter’s self-declaration (since 1 June 2025, needs a connection to Customs’ certificate system). Shipments under US$1,000 can use a declaration instead.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://customs.govt.nz/business/export/certificate-of-new-zealand-origin/exports-to-china"
+      },
+      "AANZFTA": {
+        "text": "Certificate of origin from an authorised body (Chambers of Commerce, TradeWindow Origin or WiseTech Global). Approved exporters can self-declare to parties applying the Second Protocol.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/export/approved-exporter-scheme-self-declaration-of-origin"
+      },
+      "MNZFTA": {
+        "text": "A declaration of origin by the exporter, which can go on the invoice. No certificate from an NZ certifying body is needed. A customs broker or forwarder can’t sign it for you.",
+        "checked": true,
+        "src": "NZ Customs, MITI Malaysia",
+        "url": "https://www.customs.govt.nz/business/tariffs/free-trade-agreements/new-zealand-malaysia-free-trade-agreement"
+      },
+      "NZHKCEP": {
+        "text": "Rarely needed, as Hong Kong charges no duty on almost all goods. For most goods no certificate from a certifying body is needed.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/tariffs/free-trade-agreements/new-zealandhong-kong-china-closer-economic-partnership-agreement"
+      },
+      "ANZTEC": {
+        "text": "A self-declaration on the commercial invoice or another document. No third-party certificate is needed.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/media/02ppijb4/fact-sheet-48-anztec-agreement.pdf"
+      },
+      "KNZFTA": {
+        "text": "Self-certification by the exporter: a declaration of origin or a self-issued certificate of origin. Chambers of Commerce can also certify.",
+        "checked": true,
+        "src": "NZ Chambers of Commerce",
+        "url": "https://aucklandchamber.co.nz/free-trade-agreements/"
+      },
+      "CPTPP": {
+        "text": "Certification of origin by the exporter, producer or importer. No set form, but it must carry the minimum data. Brunei, Malaysia and Viet Nam have different rules for claims made there.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/media/yunbg2u2/information-guide-cpttp.pdf"
+      },
+      "PACER Plus": {
+        "text": "A declaration of origin by the exporter or producer, using the agreement’s template. No certificate. Some low-value shipments are exempt.",
+        "checked": true,
+        "src": "MFAT, Oceania Customs Organisation",
+        "url": "https://www.mfat.govt.nz/assets/Trade-agreements/PACER-Plus/PACER-PLUS-Chapter-Summary/PACER_Plus_Chapter-Summary-3.-Rules-of-Origin.pdf"
+      },
+      "RCEP": {
+        "text": "Certificate of origin from an authorised body, or an approved exporter’s self-declaration.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/export/approved-exporter-scheme-self-declaration-of-origin"
+      },
+      "NZ-UK FTA": {
+        "text": "Self-declaration by the producer or exporter. No set format; a template is available.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/information-releases-and-legislation/legislation/international-agreements/free-trade-agreements/new-zealand-united-kingdom-free-trade-agreement"
+      },
+      "NZ-EU FTA": {
+        "text": "Statement on origin by the exporter, signed and dated on any commercial document. Valid for one year.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/information-releases-and-legislation/legislation/international-agreements/free-trade-agreements/new-zealand-european-union-free-trade-agreement"
+      },
+      "NZ-UAE CEPA": {
+        "text": "Certificate of origin from an authorised body, or an approved exporter’s self-declaration.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/business/export/approved-exporter-scheme-self-declaration-of-origin"
+      },
+      "NZ-India FTA": {
+        "text": "Certificate of origin only. Self-declaration isn’t available yet. Send the certificate to your Indian buyer so they can claim the rate.",
+        "checked": true,
+        "src": "NZ Customs",
+        "url": "https://www.customs.govt.nz/information-releases-and-legislation/legislation/international-agreements/free-trade-agreements/new-zealand-india-free-trade-agreement"
+      }
+    }
+  },
+  "controls": {
+    "AU": {
+      "agri": {
+        "title": "Export certification (DAFF)",
+        "text": "Meat, dairy, eggs, fish, grain, plants and plant products, horticulture, live animals and organics are prescribed goods under the Export Control Act 2020. Check the destination’s requirements in MICoR before you ship.",
+        "link": "https://micor.agriculture.gov.au"
+      },
+      "strategic": {
+        "title": "Defence and dual-use goods",
+        "text": "Goods on the Defence and Strategic Goods List need a permit from Defence Export Controls, at any value.",
+        "link": "https://www.defence.gov.au/business-industry/exporting/export-controls-framework/defence-strategic-goods-list"
+      },
+      "sanctions": {
+        "title": "Sanctions",
+        "text": "Check the Australian Sanctions Office before quoting or shipping.",
+        "link": "https://www.dfat.gov.au/international-relations/security/sanctions"
+      },
+      "general": [
+        "Native wildlife and CITES-listed species need a permit from DCCEEW.",
+        "Protected cultural heritage objects need a permit from the Office for the Arts."
+      ]
+    },
+    "NZ": {
+      "agri": {
+        "title": "Export requirements (MPI)",
+        "text": "Animal products, plants and plant products, dairy, meat and seafood usually need MPI official assurances. Check the destination’s Overseas Market Access Requirements (OMARs).",
+        "link": "https://www.mpi.govt.nz/export/"
+      },
+      "strategic": {
+        "title": "Strategic goods",
+        "text": "Goods on the New Zealand Strategic Goods List need an export permit from MFAT, at any value.",
+        "link": "https://www.mfat.govt.nz/en/trade/trading-weapons-and-controlled-chemicals/"
+      },
+      "sanctions": {
+        "title": "Sanctions",
+        "text": "Check MFAT’s sanctions registers before quoting or shipping. Under the Russia Sanctions Act, listed goods can’t be exported to Russia or Belarus.",
+        "link": "https://www.customs.govt.nz/about-us/news/important-notices/russian-sanctions-information-for-exporters-and-importers"
+      },
+      "general": [
+        "CITES-listed species need a permit from the Department of Conservation.",
+        "Protected New Zealand objects need permission from Manatū Taonga before they leave the country."
+      ]
+    }
+  },
+  "agriChapters": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "23",
+    "41",
+    "43",
+    "44",
+    "51"
+  ],
+  "special": [
+    {
+      "from": "AU",
+      "prefix": "2204",
+      "title": "Wine Australia",
+      "text": "Shipments over 100 litres need a Wine Australia export licence, a registered product and a shipping approval for each consignment.",
+      "link": "https://www.wineaustralia.com/selling/exporting-wine/licence-to-export",
+      "checked": true
+    },
+    {
+      "from": "AU",
+      "prefix": "2205",
+      "title": "Wine Australia",
+      "text": "Grape products are covered by Wine Australia’s export rules. Check whether this product needs a licence and shipping approval.",
+      "link": "https://www.wineaustralia.com/selling/exporting-wine",
+      "checked": false
+    },
+    {
+      "from": "NZ",
+      "prefix": "2204",
+      "title": "MPI wine export requirements",
+      "text": "MPI sets export requirements for wine, including registration and market-specific certificates. Check them before you ship.",
+      "link": "https://www.mpi.govt.nz/export/food/wine/",
+      "checked": false
+    }
+  ],
+  "strategicChapters": [
+    "28",
+    "29",
+    "36",
+    "38",
+    "84",
+    "85",
+    "88",
+    "90",
+    "93"
+  ],
+  "sanctioned": [
+    "RU",
+    "BY",
+    "IR",
+    "KP",
+    "SY",
+    "MM",
+    "LY",
+    "SD",
+    "SS",
+    "SO",
+    "YE",
+    "CD",
+    "CF",
+    "ML",
+    "AF",
+    "IQ",
+    "LB",
+    "ZW"
+  ]
+}

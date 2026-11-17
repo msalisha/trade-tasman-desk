@@ -1,0 +1,432 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tasman Trade Desk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a working desk. Sticky header with three tabs; each view is a control strip above a dense, scannable table. */
+:root {
+  --bg: #eef2f3;
+  --surface: #ffffff;
+  --sunk: #e3e9eb;
+  --ink: #13212b;
+  --muted: #586874;
+  --line: #d2dade;
+  --accent: #0d6b62;      /* customs green channel */
+  --accent-soft: #d7ece8;
+  --duty: #a8501a;        /* duty payable */
+  --duty-soft: #f6e4d6;
+  --buyer: #3b4a9c;
+  --buyer-soft: #e1e5f6;
+  --ok: #1d7a3f;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1418; --surface: #141d23; --sunk: #1a252c; --ink: #e2e9ec; --muted: #93a3ad; --line: #27343c;
+    --accent: #52c2b4; --accent-soft: #143a37; --duty: #e79a63; --duty-soft: #3d2618;
+    --buyer: #9aa8f2; --buyer-soft: #222a4d; --ok: #6fd18f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1418; --surface: #141d23; --sunk: #1a252c; --ink: #e2e9ec; --muted: #93a3ad; --line: #27343c;
+  --accent: #52c2b4; --accent-soft: #143a37; --duty: #e79a63; --duty-soft: #3d2618;
+  --buyer: #9aa8f2; --buyer-soft: #222a4d; --ok: #6fd18f; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 12px 0; }
+.brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brand h1 { margin: 0; font: 800 22px/1.1 var(--font-display); font-stretch: 85%; letter-spacing: -0.01em; }
+.brand .lane { font: 500 12px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; }
+nav.tabs { display: flex; gap: 2px; margin-top: 8px; overflow-x: auto; }
+nav.tabs a { padding: 10px 14px; text-decoration: none; color: var(--muted); font-weight: 600; border-bottom: 3px solid transparent; white-space: nowrap; }
+nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+main { padding-block: 24px 48px; }
+.view-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 8px 24px; margin-bottom: 16px; }
+.view-head h2 { margin: 0; font: 700 28px/1.15 var(--font-display); font-stretch: 90%; text-wrap: balance; }
+.view-head p { margin: 4px 0 0; color: var(--muted); max-width: 68ch; }
+.stamp { font: 500 12px/1.4 var(--font-mono); color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); padding: 6px 10px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; margin-bottom: 16px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field.grow { flex: 1 1 260px; }
+.field label, .label { font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+input[type="search"], select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 9px 10px; min-width: 0; width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.seg button { font: 600 14px var(--font-body); background: var(--bg); color: var(--muted); border: 0; padding: 9px 14px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 13px var(--font-body); background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+
+.note { font-size: 13px; color: var(--muted); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.scroll-x { overflow-x: auto; }
+
+/* Tariff results */
+.summary { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+.summary strong { color: var(--ink); }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+thead th { font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: var(--sunk); position: sticky; top: 0; }
+.tariff-table { min-width: 760px; }
+.tariff-table td.code { white-space: nowrap; font: 500 14px var(--font-mono); }
+.mkt { display: inline-block; font: 600 10px var(--font-mono); letter-spacing: 0.06em; padding: 2px 6px; border-radius: 4px; margin-right: 6px; vertical-align: 2px; }
+.mkt.AU { background: var(--duty-soft); color: var(--duty); }
+.mkt.NZ { background: var(--buyer-soft); color: var(--buyer); }
+.path { color: var(--muted); font-size: 13px; }
+.desc { font-weight: 500; }
+.rate { font: 500 14px var(--font-mono); white-space: nowrap; }
+.rate.free { color: var(--ok); }
+.rate.duty { color: var(--duty); }
+.pref-list { display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+.pref-list .row { display: flex; gap: 8px; justify-content: space-between; }
+.pref-list .best { font-weight: 600; }
+.pref-list .nm { color: var(--muted); }
+.empty { padding: 32px 16px; text-align: center; color: var(--muted); }
+
+/* FTA */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; }
+.agree { padding: 0; }
+.agree h3 { margin: 0; padding: 14px 16px; font: 700 17px var(--font-display); font-stretch: 90%; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.agree h3 .count { font: 500 12px var(--font-mono); color: var(--muted); }
+.agree ul { list-style: none; margin: 0; padding: 0; }
+.agree li { padding: 10px 16px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; }
+.agree li:last-child { border-bottom: 0; }
+.agree .ab { font-weight: 600; }
+.agree .full { color: var(--muted); font-size: 13px; grid-column: 1; }
+.agree .date { font: 500 12px var(--font-mono); color: var(--muted); white-space: nowrap; grid-row: 1; grid-column: 2; }
+.agree .tag { font: 600 10px var(--font-mono); padding: 2px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); margin-left: 6px; }
+.agree .tag.pend { background: var(--duty-soft); color: var(--duty); }
+.agree li.dim { opacity: 0.45; }
+.shared { margin-top: 16px; padding: 14px 16px; }
+.shared h3 { margin: 0 0 6px; font: 700 17px var(--font-display); font-stretch: 90%; }
+
+/* Incoterms */
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; margin-bottom: 20px; }
+.rule-group { padding: 14px; }
+.rule-group .label { display: block; margin-bottom: 10px; }
+.rule-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.rule-btn { font: 700 15px var(--font-mono); letter-spacing: 0.04em; padding: 10px 12px; min-width: 64px; border-radius: var(--r); border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.rule-btn[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.rule-detail { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 760px) { .rule-detail { grid-template-columns: 1fr; } }
+.rule-card { padding: 18px; }
+.rule-card h3 { margin: 0; font: 800 34px/1 var(--font-display); font-stretch: 80%; }
+.rule-card .full { font-size: 16px; font-weight: 500; margin: 4px 0 12px; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; margin: 0; }
+.facts dt { font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding-top: 3px; }
+.facts dd { margin: 0; }
+.watch { margin-top: 14px; padding: 10px 12px; border-radius: var(--r); background: var(--duty-soft); color: var(--ink); font-size: 14px; }
+.watch b { color: var(--duty); }
+.route { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.route svg { width: 100%; height: auto; display: block; }
+
+.matrix { min-width: 860px; font-size: 13px; }
+.matrix th, .matrix td { padding: 7px 8px; text-align: center; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; white-space: nowrap; }
+.matrix thead th button { font: 700 12px var(--font-mono); background: none; border: 0; color: var(--muted); cursor: pointer; padding: 2px 4px; }
+.matrix thead th.sel { background: var(--ink); }
+.matrix thead th.sel button { color: var(--surface); }
+.matrix td.sel { outline: 2px solid var(--ink); outline-offset: -2px; }
+.cell { display: inline-block; min-width: 28px; font: 600 12px var(--font-mono); padding: 3px 6px; border-radius: 4px; }
+.cell.S { background: var(--accent-soft); color: var(--accent); }
+.cell.B { background: var(--buyer-soft); color: var(--buyer); }
+.cell.V { background: var(--sunk); color: var(--muted); }
+.cell.o { background: transparent; border: 1px dashed currentColor; }
+.cell.o.S { color: var(--accent); } .cell.o.B { color: var(--buyer); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+.risk-row td { background: var(--sunk); }
+.pick { padding: 16px; margin-top: 24px; }
+.pick h3 { margin: 0 0 4px; font: 700 20px var(--font-display); font-stretch: 90%; }
+.pick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin: 12px 0; }
+.answer { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; padding: 12px; border-radius: var(--r); background: var(--accent-soft); }
+.answer .code { font: 800 26px var(--font-display); font-stretch: 80%; color: var(--accent); }
+.answer button { font: 600 13px var(--font-body); background: none; border: 0; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 0; }
+/* Export */
+.ex-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 880px) { .ex-grid { grid-template-columns: 1fr; } }
+.ex-table { min-width: 460px; }
+.ex-table tr.on td { background: var(--accent-soft); }
+.ex-table button.pick-code { font: 500 14px var(--font-mono); background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; text-align: left; white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+.ex-table tr.on button.pick-code { color: var(--ink); text-decoration: none; }
+.checklist { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 110px); }
+@media (max-width: 880px) { .checklist { position: static; order: -1; } }
+.checklist section { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.checklist section:last-child { border-bottom: 0; }
+.checklist h3 { margin: 0 0 6px; font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.checklist .big { font: 700 20px/1.2 var(--font-display); font-stretch: 90%; margin: 0 0 2px; }
+.checklist p { margin: 4px 0; }
+.checklist .ag { padding: 10px 0; border-top: 1px dashed var(--line); }
+.checklist .ag:first-of-type { border-top: 0; padding-top: 2px; }
+.checklist .ag-name { font-weight: 600; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.badge { font: 600 10px var(--font-mono); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+.badge.ok { background: var(--accent-soft); color: var(--accent); }
+.badge.warn { background: var(--duty-soft); color: var(--duty); }
+.flag { padding: 10px 12px; border-radius: var(--r); background: var(--duty-soft); margin-top: 8px; font-size: 14px; }
+.flag b { color: var(--duty); }
+.checklist ul.plain { margin: 6px 0 0; padding-left: 18px; font-size: 14px; color: var(--muted); }
+/* Origin */
+.ori-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; margin-bottom: 16px; }
+.ori-card { padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+.ori-code { font: 700 13px var(--font-mono); letter-spacing: 0.06em; color: var(--accent); }
+.ori-card h3 { margin: 0; font: 700 19px/1.2 var(--font-display); font-stretch: 90%; }
+.ori-card p { margin: 0; }
+.ori-block { padding: 16px; margin-bottom: 16px; }
+.ori-h { margin: 0 0 10px; font: 700 19px var(--font-display); font-stretch: 90%; }
+.ori-tests { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; }
+.ori-test { border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; background: var(--bg); }
+.ori-test b { font-family: var(--font-mono); color: var(--accent); margin-right: 6px; }
+.ori-test p { margin: 4px 0 0; font-size: 14px; }
+.ori-prov { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 16px; margin: 0; }
+@media (max-width: 560px) { .ori-prov { grid-template-columns: 1fr; } .ori-prov dd { margin-bottom: 6px; } }
+.ori-prov dt { font-weight: 600; }
+.ori-prov dd { margin: 0; color: var(--muted); }
+.ori-compare-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin: 8px 0 10px; }
+.ori-table { min-width: 820px; font-size: 14px; }
+.ori-table td:first-child { font-weight: 600; white-space: nowrap; }
+.ori-table .mk { display: block; font: 500 11px var(--font-mono); color: var(--muted); margin-top: 2px; }
+.ori-table .gap { color: var(--muted); font-style: italic; }
+.ori-calc { padding: 16px; margin-top: 24px; }
+.calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin: 12px 0; }
+.calc-grid input[type="number"] { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 9px 10px; width: 100%; font-variant-numeric: tabular-nums; }
+.calc-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.res { border-radius: var(--r); padding: 12px; background: var(--sunk); }
+.res .lbl { font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.res .num { font: 700 28px/1.1 var(--font-display); font-variant-numeric: tabular-nums; margin: 4px 0; }
+.res.pass { background: var(--accent-soft); } .res.pass .num { color: var(--accent); }
+.res.fail { background: var(--duty-soft); } .res.fail .num { color: var(--duty); }
+.res p { margin: 0; font-size: 13px; }
+footer { color: var(--muted); font-size: 12px; padding-block: 16px 32px; border-top: 1px solid var(--line); }
+footer p { margin: 4px 0; max-width: 100ch; }
+.loading { padding: 40px 16px; text-align: center; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .seg button, .rule-btn, .chip { transition: background-color .15s, color .15s, border-color .15s; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand">
+        <h1>Tasman Trade Desk</h1>
+        <span class="lane">AU · NZ · TARIFFS · FTAs · INCOTERMS® 2020</span>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#tariff" data-view="tariff">Import</a>
+      <a href="#export" data-view="export">Export</a>
+      <a href="#origin" data-view="origin">Origin</a>
+      <a href="#fta" data-view="fta">FTA finder</a>
+      <a href="#incoterms" data-view="incoterms">Incoterms</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- TARIFF -->
+  <section id="view-tariff" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Import tariff lookup</h2>
+        <p>Search the Australian and New Zealand tariffs by product words or code. Choose a country of origin to see the duty rate under each agreement that covers it.</p>
+      </div>
+      <div class="stamp" id="tariff-stamp">Loading tariff data…</div>
+    </div>
+    <div class="controls">
+      <div class="field grow">
+        <label for="q">Product or code</label>
+        <input id="q" type="search" placeholder="e.g. honey, lithium batteries, 8507.60" autocomplete="off">
+      </div>
+      <div class="field">
+        <span class="label">Importing into</span>
+        <div class="seg" role="group" aria-label="Importing market">
+          <button type="button" data-mkt="AU" aria-pressed="false">Australia</button>
+          <button type="button" data-mkt="NZ" aria-pressed="false">New Zealand</button>
+          <button type="button" data-mkt="both" aria-pressed="true">Both</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="origin">Country of origin</label>
+        <select id="origin"></select>
+      </div>
+    </div>
+    <div class="chips" style="margin-bottom:14px" aria-label="Example searches">
+      <span class="label" style="align-self:center">Try</span>
+      <button class="chip" type="button" data-q="honey">honey</button>
+      <button class="chip" type="button" data-q="wine">wine</button>
+      <button class="chip" type="button" data-q="footwear leather">leather footwear</button>
+      <button class="chip" type="button" data-q="8507.60">8507.60 lithium-ion</button>
+      <button class="chip" type="button" data-q="frozen beef">frozen beef</button>
+      <button class="chip" type="button" data-q="tyres">tyres</button>
+    </div>
+    <p class="summary" id="tariff-summary"></p>
+    <div class="panel scroll-x" id="tariff-results"><div class="loading">Loading the AU and NZ tariffs (about 5 MB)…</div></div>
+    <p class="note" id="tariff-foot"></p>
+  </section>
+
+  <!-- EXPORT -->
+  <section id="view-export" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Export checker</h2>
+        <p>Find your export code, then see what the shipment needs: the export declaration, the agreement and proof of origin your buyer needs, and any permits.</p>
+      </div>
+      <div class="stamp" id="export-stamp">Rules checked 17 Nov 2026</div>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <span class="label">Exporting from</span>
+        <div class="seg" role="group" aria-label="Exporting from">
+          <button type="button" data-from="AU" aria-pressed="true">Australia</button>
+          <button type="button" data-from="NZ" aria-pressed="false">New Zealand</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="ex-dest">Destination</label>
+        <select id="ex-dest"></select>
+      </div>
+      <div class="field grow">
+        <label for="ex-q">Product or export code</label>
+        <input id="ex-q" type="search" placeholder="e.g. wine, lamb, 0409" autocomplete="off">
+      </div>
+    </div>
+    <div class="ex-grid">
+      <div class="ex-list">
+        <p class="summary" id="ex-summary"></p>
+        <div class="panel scroll-x" id="ex-results"><div class="loading">Loading export codes…</div></div>
+      </div>
+      <aside class="panel checklist" id="ex-check" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- ORIGIN -->
+  <section id="view-origin" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Origin criteria</h2>
+        <p>How goods qualify as originating under an FTA, how the main rules differ between agreements, and a calculator to test a product against its rule.</p>
+      </div>
+      <div class="stamp">Rules checked 17 Nov 2026 against ABF, NZ Customs and MFAT guides</div>
+    </div>
+
+    <div class="ori-grid" id="ori-criteria"></div>
+
+    <div class="panel ori-block">
+      <h3 class="ori-h">Product-specific rule tests</h3>
+      <div class="ori-tests" id="ori-tests"></div>
+      <p class="note" id="ori-psr-links"></p>
+    </div>
+
+    <div class="panel ori-block">
+      <h3 class="ori-h">Other provisions that can decide origin</h3>
+      <dl class="ori-prov" id="ori-prov"></dl>
+    </div>
+
+    <div class="ori-compare-head">
+      <h3 class="ori-h" style="margin:0">Compare agreements</h3>
+      <div class="seg" role="group" aria-label="Agreements for">
+        <button type="button" data-omkt="all" aria-pressed="true">All</button>
+        <button type="button" data-omkt="AU" aria-pressed="false">Australia</button>
+        <button type="button" data-omkt="NZ" aria-pressed="false">New Zealand</button>
+      </div>
+    </div>
+    <div class="panel scroll-x"><table class="ori-table" id="ori-table"></table></div>
+    <p class="note">General rules only. The product-specific rule for your HS code sets the actual test and threshold, and can override these.</p>
+
+    <div class="panel ori-calc">
+      <h3 class="ori-h">Check a product</h3>
+      <p class="note">Enter values in any one currency. The figures below are an example; replace them with your own. This is a self-check, not an origin ruling.</p>
+      <div class="calc-grid">
+        <div class="field"><label for="oc-ag">Agreement</label><select id="oc-ag"></select></div>
+        <div class="field"><label for="oc-req">RVC required by the product rule (%)</label><input id="oc-req" type="number" min="0" max="100" step="1" inputmode="decimal"></div>
+        <div class="field"><label for="oc-fob">FOB value of the good</label><input id="oc-fob" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div class="field"><label for="oc-vnm">Non-originating materials (CIF)</label><input id="oc-vnm" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div class="field"><label for="oc-vom">Originating materials, plus labour, overheads and profit where allowed</label><input id="oc-vom" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div class="field"><label for="oc-fail">Non-originating inputs that fail the tariff shift</label><input id="oc-fail" type="number" min="0" step="any" inputmode="decimal"></div>
+      </div>
+      <div class="calc-out" id="oc-out" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- FTA -->
+  <section id="view-fta" hidden>
+    <div class="view-head">
+      <div>
+        <h2>FTA finder</h2>
+        <p>Pick a trading partner to see which agreements cover trade with Australia and New Zealand, and when each came into force.</p>
+      </div>
+      <div class="stamp">Agreement lists checked 17 Nov 2026 against DFAT and MFAT</div>
+    </div>
+    <div class="controls">
+      <div class="field grow">
+        <label for="fta-country">Trading partner</label>
+        <select id="fta-country"></select>
+      </div>
+    </div>
+    <div class="grid2" id="fta-results"></div>
+    <div class="panel shared" id="fta-shared"></div>
+  </section>
+
+  <!-- INCOTERMS -->
+  <section id="view-incoterms" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Incoterms® 2020</h2>
+        <p>The eleven rules in plain terms: where risk passes from seller to buyer, and who pays for each leg. Pick a rule, or use the picker at the bottom.</p>
+      </div>
+      <div class="stamp">Summaries written for this tool, not ICC text</div>
+    </div>
+    <div class="rules">
+      <div class="panel rule-group"><span class="label">Any mode of transport</span><div class="rule-btns" id="rules-any"></div></div>
+      <div class="panel rule-group"><span class="label">Sea and inland waterway only</span><div class="rule-btns" id="rules-sea"></div></div>
+    </div>
+    <div class="rule-detail">
+      <div class="panel rule-card" id="rule-card"></div>
+      <div class="panel route" id="rule-route"></div>
+    </div>
+    <div class="panel scroll-x"><table class="matrix" id="matrix"></table></div>
+    <div class="legend">
+      <span><span class="cell S">S</span> Seller pays</span>
+      <span><span class="cell B">B</span> Buyer pays</span>
+      <span><span class="cell o S">s</span> / <span class="cell o B">b</span> Not required, but that party carries the risk so usually arranges it</span>
+      <span><span class="cell V">?</span> Depends on the named place or the carriage contract</span>
+    </div>
+    <div class="panel pick" id="picker">
+      <h3>Which rule fits this shipment?</h3>
+      <p class="note">Answer four questions. This is a starting point for the conversation with your trading partner, not legal advice.</p>
+      <div class="pick-grid">
+        <div class="field"><label for="p-mode">Cargo and mode</label>
+          <select id="p-mode"><option value="any">Containers, air, road, rail or mixed</option><option value="sea">Bulk or breakbulk by sea</option></select></div>
+        <div class="field"><label for="p-freight">Who books and pays main freight?</label>
+          <select id="p-freight"><option value="seller">Seller</option><option value="buyer">Buyer</option></select></div>
+        <div class="field"><label for="p-risk">Seller's risk ends…</label>
+          <select id="p-risk"></select></div>
+        <div class="field"><label for="p-extra">And…</label>
+          <select id="p-extra"></select></div>
+      </div>
+      <div class="answer" id="p-answer"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Tariff data: NZ Customs Service CusMod tariff files (nightly) and the Australian Border Force Working Tariff, Schedule 3. Australian export codes: ABS AHECC 2022. NZ export codes are the NZ tariff items and statistical keys, which NZ Customs uses for both imports and exports. Australian preferential FTA rates sit in other Schedules of the Customs Tariff Act and are not loaded yet; check them on the <a href="https://ftaportal.dfat.gov.au" target="_blank" rel="noopener">DFAT FTA Portal</a>.</p>
+  <p>Incoterms® is a registered trademark of the International Chamber of Commerce. The summaries here are this tool's own and are not the ICC rules; use the official ICC publication for contracts. Everything here is general guidance, not a binding classification or a customs ruling.</p>
+</footer>
+
+<script src="app.js"></script>

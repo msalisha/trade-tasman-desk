@@ -1,0 +1,583 @@
+{
+ "checked": "2026-11-17",
+ "criteria": [
+  {
+   "code": "WO",
+   "name": "Wholly obtained",
+   "text": "Natural or primary goods that come entirely from one country: live animals born and raised there, crops grown and harvested there, minerals extracted there, fish caught by its vessels. Industrial processing generally takes goods out of this category."
+  },
+  {
+   "code": "PE",
+   "name": "Produced entirely from originating materials",
+   "text": "Manufactured goods made only from materials that already count as originating in one or more parties. The materials themselves may have been made from imported inputs, as long as they qualified at an earlier stage."
+  },
+  {
+   "code": "PSR",
+   "name": "Product-specific rule",
+   "text": "For goods with non-originating inputs. Each HS code has its own rule in each agreement, built from the tests below, alone or combined (“CTH or RVC40”, “CTSH + RVC45”)."
+  }
+ ],
+ "psrTests": [
+  {
+   "code": "CC",
+   "name": "Change of chapter",
+   "text": "Every non-originating input is in a different 2-digit chapter from the finished good."
+  },
+  {
+   "code": "CTH",
+   "name": "Change of heading",
+   "text": "Every non-originating input is in a different 4-digit heading."
+  },
+  {
+   "code": "CTSH",
+   "name": "Change of subheading",
+   "text": "Every non-originating input is in a different 6-digit subheading."
+  },
+  {
+   "code": "RVC",
+   "name": "Regional value content",
+   "text": "At least a set share of the good’s value comes from the parties. Build-down: (FOB − non-originating materials) ÷ FOB. Build-up: originating materials ÷ FOB (some agreements add labour, overheads and profit)."
+  },
+  {
+   "code": "SP",
+   "name": "Specific process",
+   "text": "A named production step must happen in a party, such as a chemical reaction, refining or textile finishing."
+  }
+ ],
+ "provisions": [
+  {
+   "name": "De minimis (tolerance)",
+   "text": "Lets a good pass a tariff-shift test even if a small share of non-originating inputs didn’t change classification. Usually 10% of the good’s value."
+  },
+  {
+   "name": "Accumulation (cumulation)",
+   "text": "Materials originating in a partner country count as local when you use them. How far it reaches varies by agreement."
+  },
+  {
+   "name": "Consignment",
+   "text": "Goods must ship directly, or pass through a third country only for unloading, reloading, storage or handling that keeps them in good condition."
+  },
+  {
+   "name": "Minimal operations",
+   "text": "Simple steps like packing, labelling, sorting, simple mixing or assembling never confer origin on their own."
+  },
+  {
+   "name": "Packaging and accessories",
+   "text": "Retail packaging, transport packing, and customary accessories or spare parts are usually ignored for a tariff-shift test, but may count toward value tests."
+  }
+ ],
+ "psrLookup": {
+  "AU": {
+   "name": "DFAT FTA Portal",
+   "url": "https://ftaportal.dfat.gov.au"
+  },
+  "NZ": {
+   "name": "MFAT Tariff Finder",
+   "url": "https://www.tariff-finder.govt.nz"
+  }
+ },
+ "agreements": [
+  {
+   "id": "AANZFTA",
+   "markets": [
+    "AU",
+    "NZ"
+   ],
+   "value": "RVC 40% of FOB (build-up or build-down), usually as an alternative to a tariff shift.",
+   "deMinimis": "10% of FOB value; textiles 10% by weight or value.",
+   "cumulation": "Materials from any AANZFTA party count as originating.",
+   "src": "NZ Customs, ABF",
+   "url": "https://www.customs.govt.nz/media/3ynnc3fp/fact-sheet-42-asean-australia-new-zealand-free-trade-area-aanzfta-information-about-rules-of-origin-imports.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "RCEP",
+   "markets": [
+    "AU",
+    "NZ"
+   ],
+   "value": "Most product rules offer RVC 40% (build-up or build-down) or a tariff shift.",
+   "deMinimis": "10% of value; textiles 10% by weight.",
+   "cumulation": "Originating materials from all RCEP parties count.",
+   "src": "ABF (Dec 2024), MFAT",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/rcep-rules-of-origin.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "CPTPP",
+   "markets": [
+    "AU",
+    "NZ"
+   ],
+   "value": "Threshold set in each product rule. Four methods: build-up, build-down, focused value, and net cost (vehicles).",
+   "deMinimis": "10% of value; textiles 10% by weight of the component that sets the classification.",
+   "cumulation": "Full accumulation: the CPTPP parties are treated as one production area.",
+   "src": "MFAT Tariff Finder, Singapore Customs",
+   "url": "https://www.tariff-finder.govt.nz/CPTPP/",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "PACER Plus",
+   "markets": [
+    "AU",
+    "NZ"
+   ],
+   "value": "A stated RVC percentage in the product rule, or a tariff shift or process rule.",
+   "deMinimis": "10% of FOB value; textiles 10% by weight.",
+   "cumulation": "Materials originating in other PACER Plus parties count.",
+   "src": "MFAT",
+   "url": "https://www.mfat.govt.nz/assets/Trade-agreements/PACER-Plus/PACER-PLUS-Chapter-Summary/PACER_Plus_Chapter-Summary-3.-Rules-of-Origin.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "ANZCERTA / CER",
+   "markets": [
+    "AU",
+    "NZ"
+   ],
+   "value": "Mostly a tariff shift (Annex G); some goods add an RVC. Alternative for some goods: last process in AU or NZ plus at least 50% RVC on a factory-cost basis.",
+   "deMinimis": "10% of adjusted value.",
+   "cumulation": "Production in Australia and New Zealand counts together.",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/vzkfeusr/fact-sheet-20-australia-new-zealand-economic-relations-trade-agreement-anzerta-information-about-rules-of-origin.pdf",
+   "rvc": {
+    "down": 50,
+    "up": 50
+   },
+   "dmPct": 10,
+   "note": "CER’s 50% test uses factory cost, not FOB. Use the calculator as a rough guide only."
+  },
+  {
+   "id": "SAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "RVC 40% where the product rule allows it, mostly build-down.",
+   "deMinimis": "10% of customs value; textiles 10% by weight.",
+   "cumulation": "Australian materials count as Singaporean (and vice versa).",
+   "src": "ABF (2017)",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/singapore-aus-fta-procedural-instructions.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "TAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Set in each product rule, from 40% up to 55%.",
+   "deMinimis": "10% of customs value.",
+   "cumulation": "Australian materials count as Thai (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/instructions-guidelines-thailand-aus-fta.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "AUSFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Only where the product rule allows an RVC: 35% build-up, 45% build-down, or 50% net cost (vehicles).",
+   "deMinimis": "10% of adjusted value; textiles 7% by weight.",
+   "cumulation": "Production in either country counts together.",
+   "src": "ABF, DFAT",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/aus-us-fta-guide-determining-origin.pdf",
+   "rvc": {
+    "down": 45,
+    "up": 35
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "AClFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "RVC set in each product rule, calculated build-down only: (adjusted value − non-originating materials) ÷ adjusted value.",
+   "deMinimis": "10% of adjusted value.",
+   "cumulation": "An originating good of one party used in production in the other counts as originating there.",
+   "src": "Agreement text, Ch. 4 (OAS SICE)",
+   "url": "https://sice.oas.org/trade/CHL_AUS_Final_e/CHL_AUS_Txt_e.asp",
+   "rvc": null,
+   "dmPct": 10,
+   "note": "AClFTA uses build-down only, so ignore the build-up result."
+  },
+  {
+   "id": "MAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Commonly RVC 40% as an alternative to a tariff shift.",
+   "deMinimis": "10% of customs value; textiles may also use a weight test.",
+   "cumulation": "Australian materials count as Malaysian (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/instructions-guidelines-malaysia-aus-fta.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "KAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Set in each product rule, commonly RVC 40%.",
+   "deMinimis": "10% of customs value; textiles 10% by weight.",
+   "cumulation": "Australian materials count as Korean (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/instructions-guidelines-korea-aus-fta.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "JAEPA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Commonly RVC 40% as an alternative to a tariff shift.",
+   "deMinimis": "10% of customs value; textiles 10% by weight. For chapters 1–24 it can’t cover materials in the same subheading as the good.",
+   "cumulation": "Australian materials count as Japanese (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/instructions-guidelines-japan-aus-fta.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "ChAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Set in each product rule, commonly RVC 40%: (value − non-originating materials) ÷ value.",
+   "deMinimis": "10% of customs value.",
+   "cumulation": "Australian materials count as Chinese (and vice versa).",
+   "src": "ABF, DFAT",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/instructions-guidelines-australia-china-fta.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "A-HKFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Commonly RVC 40% as an alternative to a tariff shift.",
+   "deMinimis": "10% of customs value; textiles 10% by weight.",
+   "cumulation": "Australian materials count as Hong Kong materials (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/ahkfta-guide.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "PAFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Commonly a tariff shift or RVC 40%, as co-equal options.",
+   "deMinimis": "10% of customs value; textiles 10% by weight.",
+   "cumulation": "Australian materials count as Peruvian (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/fta-guide-peru.PDF",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "IA-CEPA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Qualifying value content (QVC) set in each product rule, commonly QVC 40% or a tariff shift.",
+   "deMinimis": "10% of customs value; textiles 10% by weight.",
+   "cumulation": "Australian materials count as Indonesian (and vice versa).",
+   "src": "ABF",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/indonesia-australia-comprehensive-economic-partnership-agreement.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "AI-ECTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Goods not listed in Annex 4B: a change of subheading plus QVC of 35% build-up or 45% build-down. Listed goods follow their own rule (many are wholly obtained or change of chapter).",
+   "deMinimis": "10% of customs value; chapters 50–63 10% by weight.",
+   "cumulation": "Goods and materials originating in either party count, including production done there.",
+   "src": "ABF (Mar 2023)",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/ECTA-rules-of-origin.pdf",
+   "rvc": {
+    "down": 45,
+    "up": 35
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "A-UKFTA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Set in each product rule, from RVC 25% to 40% and up.",
+   "deMinimis": "10% of customs value or of production value; chapters 1–24 and 50–63 can also use 10% by weight.",
+   "cumulation": "Materials and production in both countries count.",
+   "src": "ABF (Dec 2024)",
+   "url": "https://www.abf.gov.au/free-trade-agreements/files/a-ukfta-rules-of-origin.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "AU-UAE CEPA",
+   "markets": [
+    "AU"
+   ],
+   "value": "Qualifying value content (QVC) set in each product rule, e.g. 40%, build-down or build-up.",
+   "deMinimis": "10% of customs value or 15% of ex-works price; chapters 50–63 also 10% by weight.",
+   "cumulation": "Production in the UAE and Australia counts together.",
+   "src": "Customs Amendment (A-UAE CEPA) Act 2025, ABF regulations note",
+   "url": "https://www.legislation.gov.au/C2025A00032/asmade/2025-09-24/text/original/pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "ANZSCEP",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC 40% build-down or 30% build-up, as an alternative to a tariff shift.",
+   "deMinimis": "10% of value; textiles 10% by weight or value.",
+   "cumulation": "Full accumulation: materials and production in either country count.",
+   "src": "NZ Customs, Protocol Ch. 3 (MFAT)",
+   "url": "https://www.mfat.govt.nz/assets/Trade-agreements/Singapore-NZ-CEP/CEP-Upgrade-Protocol-all-chapters-and-annexes/P03-Ch3-Rules-of-Origin-and-Origin-Procedures.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 30
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "TNZCEP",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Mostly a tariff shift. Chapters 50–64 add RVC 50% of FOB (build-down).",
+   "deMinimis": "10% of FOB value.",
+   "cumulation": "NZ materials count as Thai (and vice versa).",
+   "src": "MFAT / NZ Customs (2013)",
+   "url": "https://www.mfat.govt.nz/assets/Trade-agreements/Thailand-NZ-CEP/NZ-Thailand-Fact-Sheet-30.pdf",
+   "rvc": {
+    "down": 50,
+    "up": 50
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "P4",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Tariff shift or RVC 45%; chapters 50–64 need a tariff shift plus RVC 50%.",
+   "deMinimis": "10% of transaction value.",
+   "cumulation": "Materials from any P4 party count.",
+   "src": "NZ Customs",
+   "url": "https://www.mfat.govt.nz/assets/Trade-agreements/P4/fact-sheet-31-trans-pacific-strategic-economic-partnership-agreement-tpa-information-about-the-rules-of-origin-imports.pdf",
+   "rvc": {
+    "down": 45,
+    "up": 45
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "NZCFTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC applies to some goods (mostly chapters 84–90), based on FOB value.",
+   "deMinimis": "10% of FOB value.",
+   "cumulation": "NZ materials count as Chinese (and vice versa).",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/owrb5euc/fact-sheet-37-new-zealand-china-free-trade-agreement-nzcfta-information-about-rules-of-origin.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "MNZFTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Qualifying value content (QVC) where the product rule requires or allows it: (FOB − non-originating materials) ÷ FOB.",
+   "deMinimis": "10% of FOB value; textiles 10% by weight.",
+   "cumulation": "An originating good used in one party counts as originating in the other.",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/vw2bzsj1/fact-sheet-44-malaysia-nz-fta-mnzfta.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "NZHKCEP",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC where the product rule requires or allows it (build-up or build-down).",
+   "deMinimis": "10% of FOB value.",
+   "cumulation": "NZ materials count as Hong Kong materials.",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/dn4hf2fi/fact-sheet-45-nz-hong-kong-china-cep-agreement.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "ANZTEC",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC 40% where the product rule allows it.",
+   "deMinimis": "10% of FOB value.",
+   "cumulation": "Materials originating in either party count.",
+   "src": "MFAT Tariff Finder, NZ Customs",
+   "url": "https://www.tariff-finder.govt.nz/ANZTEC/",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "KNZFTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC 35% or 40% build-down, or 30% build-up / 40% build-down, as set in the product rule.",
+   "deMinimis": "10% of value; textiles 10% by value or weight. Limits apply in chapters 1–14.",
+   "cumulation": "Materials and production in either country count.",
+   "src": "MFAT Tariff Finder, Agreement Ch. 3 (MFAT)",
+   "url": "https://www.tariff-finder.govt.nz/KNZFTA/",
+   "rvc": {
+    "down": 40,
+    "up": 30
+   },
+   "dmPct": 10,
+   "note": null
+  },
+  {
+   "id": "NZ-UK FTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "RVC 25% or 40% (build-up or build-down), as set in the product rule.",
+   "deMinimis": "15% of value; chapters 1–24 and 50–63 can also use 15% of net weight. Higher than most NZ agreements.",
+   "cumulation": "Materials and production in either country count. Cumulation with shared FTA partners isn’t in force yet.",
+   "src": "NZ Customs, Agreement Ch. 3 (UK Government)",
+   "url": "https://www.customs.govt.nz/media/tfbfg3sj/uk-fta-fact-sheet.pdf",
+   "rvc": null,
+   "dmPct": 15,
+   "note": null
+  },
+  {
+   "id": "NZ-EU FTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Maximum non-originating materials (MaxNOM) as a % of the ex-works price, set in each product rule.",
+   "deMinimis": "10% of ex-works price; separate textile tolerances.",
+   "cumulation": "Materials and processing in the EU count as NZ (and vice versa).",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/2u5fwup5/eu-nz-fta-roo-guidance-information.pdf",
+   "rvc": null,
+   "dmPct": 10,
+   "note": "The EU agreement caps non-originating content instead of setting a minimum local content. Use the build-down result: 100% minus it is your non-originating share."
+  },
+  {
+   "id": "NZ-UAE CEPA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Value content set in each product rule (e.g. RVC40), on ex-works or FOB value, build-down.",
+   "deMinimis": "15% of ex-works or FOB value.",
+   "cumulation": "UAE materials count as NZ (and vice versa).",
+   "src": "NZ Customs",
+   "url": "https://www.customs.govt.nz/media/l1oblrtd/uae-cepa-roo-guidance-information.pdf",
+   "rvc": {
+    "down": 40,
+    "up": 40
+   },
+   "dmPct": 15,
+   "note": null
+  },
+  {
+   "id": "NZ-India FTA",
+   "markets": [
+    "NZ"
+   ],
+   "value": "Qualifying value content (QVC) set in each product rule, e.g. 45%. With the build-up formula the threshold is 10 points lower (except chapter 71).",
+   "deMinimis": "10% of FOB value; textiles 10% by weight or value; 1% for wholly obtained goods.",
+   "cumulation": "Bilateral: Indian materials count as NZ (and vice versa).",
+   "src": "NZ Customs (2026 guidebook)",
+   "url": "https://www.customs.govt.nz/media/f2unxkzc/new-zealand-india-free-trade-agreement-rules-of-origin-guidebook.pdf",
+   "rvc": {
+    "down": 45,
+    "up": 35
+   },
+   "dmPct": 10,
+   "note": "Build-up threshold is 10 points below the product rule’s figure."
+  }
+ ]
+}
