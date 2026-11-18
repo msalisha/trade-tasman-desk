@@ -5,7 +5,7 @@ so this wraps it in a full document for ordinary web hosting.
 
 Usage: python3 scripts/build_site.py [out_dir]
 """
-import os, shutil, sys
+import hashlib, os, shutil, sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "_site")
@@ -27,6 +27,11 @@ def main():
     if 'name="viewport"' not in head:
         head = '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' + head
     page = HEAD + head + "\n</head>\n<body>\n" + body.strip() + "\n</body>\n</html>\n"
+    # Version the script and icon URLs so browsers fetch the new files after each deploy
+    # instead of pairing a fresh page with a cached old script.
+    for name in ("app.js", "assets/logo.svg"):
+        digest = hashlib.sha256(open(os.path.join(ROOT, name), "rb").read()).hexdigest()[:10]
+        page = page.replace(f'"{name}"', f'"{name}?v={digest}"')
 
     if os.path.exists(OUT):
         shutil.rmtree(OUT)

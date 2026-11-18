@@ -457,7 +457,9 @@ async function loadFtaMap() {
     ftaMap.data = m;
     paintFtaMap(true);
   } catch (err) {
-    $(".fta-map").hidden = true;   // the finder still works without the map
+    // The finder still works without the map; offer a retry (it also retries next time the tab opens).
+    $("#fta-map-scroll").insertAdjacentHTML("afterbegin", `<p class="map-error">The map didn’t load. <button type="button" class="chip" id="fta-map-retry">Try again</button></p>`);
+    $("#fta-map-retry").addEventListener("click", () => { $(".map-error").remove(); loadFtaMap(); });
   } finally {
     ftaMap.loading = false;
   }
