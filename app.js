@@ -113,6 +113,7 @@ function route() {
   const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "tariff";
   VIEWS.forEach((name) => ($("#view-" + name).hidden = name !== v));
   $$("nav.tabs a").forEach((a) => a.setAttribute("aria-current", a.dataset.view === v ? "page" : "false"));
+  if (v === "fta" && state.data) loadFtaMap();
 }
 window.addEventListener("hashchange", route);
 
@@ -424,6 +425,65 @@ function renderFta() {
       : `No single agreement covers ${esc(name)} together with both Australia and New Zealand.`}</p>`;
   }
   $("#fta-shared").innerHTML = shared;
+  paintFtaMap(false);
+}
+
+/* ---------- FTA map ---------- */
+const ftaMap = { data: null, loading: false };
+async function loadFtaMap() {
+  if (ftaMap.data || ftaMap.loading) return;
+  ftaMap.loading = true;
+  try {
+    const m = await fetch("data/world_map.json").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    const svg = $("#fta-map");
+    svg.setAttribute("viewBox", `0 0 ${m.w} ${m.h}`);
+    const title = svg.querySelector("title").outerHTML;
+    const C = state.data.fta.countries;
+    const shapes = [], dots = [];
+    for (const [iso, c] of Object.entries(m.countries)) {
+      const name = esc(C[iso] || iso);
+      if (c.d) shapes.push(`<path data-iso="${iso}" d="${c.d}"><title>${name}</title></path>`);
+      if (c.small) dots.push(`<circle data-iso="${iso}" data-dot="1" cx="${c.c[0]}" cy="${c.c[1]}" r="3.2"><title>${name}</title></circle>`);
+    }
+    svg.innerHTML = title + `<g>${shapes.join("")}</g><g>${dots.join("")}</g>`;
+    svg.addEventListener("click", (e) => {
+      const el = e.target.closest("[data-iso]");
+      if (!el || !state.data.fta.countries[el.dataset.iso]) return;
+      const sel = $("#fta-country");
+      sel.value = el.dataset.iso;
+      store.set("tt.fta", sel.value);
+      renderFta();
+    });
+    ftaMap.data = m;
+    paintFtaMap(true);
+  } catch (err) {
+    $(".fta-map").hidden = true;   // the finder still works without the map
+  } finally {
+    ftaMap.loading = false;
+  }
+}
+function paintFtaMap(centre) {
+  const D = state.data;
+  if (!ftaMap.data || !D) return;
+  const iso = $("#fta-country").value;
+  $$("#fta-map [data-iso]").forEach((el) => {
+    const k = el.dataset.iso;
+    let cls;
+    if (k === "AU" || k === "NZ") cls = "home";
+    else {
+      const au = D.cover(D.fta.AU, k).length > 0, nz = D.cover(D.fta.NZ, k).length > 0;
+      cls = au && nz ? "both" : au ? "au" : nz ? "nz" : "none";
+    }
+    // Dots for tiny countries only show when there is something to see.
+    if (el.dataset.dot) el.style.display = cls === "none" && k !== iso ? "none" : "";
+    el.setAttribute("class", cls + (k === iso ? " sel" : ""));
+  });
+  // Raise the selected country so its outline isn't hidden by neighbours.
+  $$(`#fta-map [data-iso="${iso}"]`).forEach((el) => el.parentNode.appendChild(el));
+  if (centre) {
+    const sc = $("#fta-map-scroll");
+    sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2;
+  }
 }
 
 /* ---------- Origin view ---------- */
@@ -751,6 +811,7 @@ async function boot() {
     tariffFoot();
     renderTariff();
     renderFta();
+    if (location.hash === "#fta") loadFtaMap();
     renderExport();
   } catch (err) {
     $("#tariff-results").innerHTML = `<div class="empty">The tariff data didn’t load (${esc(err.message)}). Reload the page to try again.</div>`;

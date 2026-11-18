@@ -118,6 +118,27 @@ thead th { font: 600 11px var(--font-body); text-transform: uppercase; letter-sp
 .agree .tag { font: 600 10px var(--font-mono); padding: 2px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); margin-left: 6px; }
 .agree .tag.pend { background: var(--duty-soft); color: var(--duty); }
 .agree li.dim { opacity: 0.45; }
+/* FTA map */
+.fta-map { margin-bottom: 16px; overflow: hidden; }
+.map-scroll { overflow-x: auto; background: var(--bg); }
+#fta-map { display: block; width: 100%; min-width: 640px; height: auto; }
+#fta-map path, #fta-map circle { stroke: var(--surface); stroke-width: 0.4; cursor: pointer; transition: fill 0.15s; }
+#fta-map circle { stroke-width: 1; }
+#fta-map .none { fill: var(--line); }
+#fta-map .both { fill: var(--accent); }
+#fta-map .au { fill: var(--buyer); }
+#fta-map .nz { fill: var(--duty); }
+#fta-map .home { fill: var(--ink); }
+#fta-map .sel { stroke: var(--ink); stroke-width: 1.6; }
+#fta-map .home.sel { stroke: var(--accent); }
+#fta-map path:hover, #fta-map circle:hover { opacity: 0.75; }
+.map-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 13px; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; }
+.map-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.k-both { background: var(--accent); } .k-au { background: var(--buyer); } .k-nz { background: var(--duty); } .k-none { background: var(--line); }
+.map-hint { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { #fta-map path, #fta-map circle { transition: none; } }
+
 .shared { margin-top: 16px; padding: 14px 16px; }
 .shared h3 { margin: 0 0 6px; font: 700 17px var(--font-display); font-stretch: 90%; }
 
@@ -398,6 +419,20 @@ footer p { margin: 4px 0; max-width: 100ch; }
       <div class="field grow">
         <label for="fta-country">Trading partner</label>
         <select id="fta-country"></select>
+      </div>
+    </div>
+    <div class="panel fta-map">
+      <div class="map-scroll" id="fta-map-scroll">
+        <svg id="fta-map" role="img" aria-labelledby="fta-map-t" preserveAspectRatio="xMidYMid meet"><title id="fta-map-t">World map of Australia’s and New Zealand’s free trade agreement partners</title></svg>
+      </div>
+      <div class="map-foot">
+        <ul class="map-legend" aria-label="Map key">
+          <li><i class="k-both"></i>Australia and NZ</li>
+          <li><i class="k-au"></i>Australia only</li>
+          <li><i class="k-nz"></i>NZ only</li>
+          <li><i class="k-none"></i>No agreement in force</li>
+        </ul>
+        <span class="map-hint">Click a country to see its agreements. Map: Natural Earth.</span>
       </div>
     </div>
     <div class="grid2" id="fta-results"></div>
