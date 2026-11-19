@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T22:11Z",
+ "updated": "2026-11-19T01:02Z",
  "sources": {
   "mfat": {
    "enabled": true,
@@ -63,6 +63,12 @@
   "ifcbaa": {
    "enabled": true,
    "items": [
+    {
+     "title": "Import Industry Advice And Notices 19 November 2026",
+     "date": "2026-11-19",
+     "ref": "WIN 2026/46",
+     "url": "https://www.ifcbaa.com/CBFCA/News/WIN-2026/Import%20Industry%20Advice%20And%20Notices%2019%20November%202026.aspx"
+    },
     {
      "title": "Import Industry Advice And Notices 12 November 2026",
      "date": "2026-11-12",
